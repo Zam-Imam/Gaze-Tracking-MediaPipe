@@ -58,6 +58,16 @@ def process_frame(frame, landmarker,smoothed_position, timestamp):
     if result.face_landmarks:
         landmarks=result.face_landmarks[0]
 
+        # ---- Draw Face Bounding Box ----
+        h, w, _ = frame.shape
+        x_coords = [lm.x for lm in landmarks]
+        y_coords = [lm.y for lm in landmarks]
+        min_x = int(min(x_coords) * w)
+        max_x = int(max(x_coords) * w)
+        min_y = int(min(y_coords) * h)
+        max_y = int(max(y_coords) * h)
+        cv2.rectangle(frame,(min_x, min_y),(max_x, max_y),(0, 255, 0),2)
+
         # Right eye landmarks
         outer_corner=landmarks[33]
         inner_corner=landmarks[133]
